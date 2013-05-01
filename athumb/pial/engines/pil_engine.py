@@ -14,7 +14,7 @@ class PILEngine(EngineBase):
 
     def __init__(self):
         Image.init()
-        self.extesions_available = Image.EXTENSIONS.values()
+        self.extesions_available = Image.EXTENSION.values()
 
     def get_image(self, source):
         """
