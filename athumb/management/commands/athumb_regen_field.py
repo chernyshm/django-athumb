@@ -2,6 +2,7 @@ import os
 from django.core.files.base import ContentFile
 from django.core.management.base import BaseCommand, CommandError
 from django.contrib.contenttypes.models import ContentType
+from boto.exception import S3ResponseError
 
 class Command(BaseCommand):
     args = '<app.model> <field>'
@@ -85,9 +86,9 @@ class Command(BaseCommand):
                 fdat = file.read()
                 file.close()
                 del file.file
-            except IOError:
+            except (IOError, S3ResponseError):
                 # Key didn't exist.
-                print "(%d/%d) ID %d -- Error -- File missing on S3" % (
+                print "(%d/%d) ID %d -- Error -- File missing" % (
                                                               counter,
                                                               num_instances,
                                                               instance.id)
