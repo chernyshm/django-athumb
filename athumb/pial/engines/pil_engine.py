@@ -10,12 +10,6 @@ class PILEngine(EngineBase):
     """
     Python Imaging Library Engine. This implements members of EngineBase.
     """
-    extesions_available = []
-
-    def __init__(self):
-        Image.init()
-        self.extesions_available = Image.EXTENSION.values()
-
     def get_image(self, source):
         """
         Given a file-like object, loads it up into a PIL.Image object
@@ -126,8 +120,6 @@ class PILEngine(EngineBase):
         """
         ImageFile.MAXBLOCK = 1024 * 1024
         buf = StringIO()
-        if not format in self.extesions_available:
-            format = 'JPEG'
 
         try:
             # ptimize makes the encoder do a second pass over the image, if

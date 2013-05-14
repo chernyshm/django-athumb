@@ -188,7 +188,7 @@ class ImageWithThumbsFieldFile(ImageFieldFile):
         # RAM then hit swap.
         img_fobj = cStringIO.StringIO()
         # This writes the thumbnailed PIL.Image to the file-like object.
-        THUMBNAIL_ENGINE.write(thumbed_image, img_fobj, format=file_extension)
+        THUMBNAIL_ENGINE.write(thumbed_image, img_fobj, format=thumbed_image.format)
         # Save the result to the storage backend.
         thumb_content = ContentFile(img_fobj.getvalue())
         self.storage.save(thumb_filename, thumb_content)
