@@ -120,7 +120,7 @@ class PILEngine(EngineBase):
         """
         ImageFile.MAXBLOCK = 1024 * 1024
         buf = StringIO()
-
+        format = format or 'JPEG'
         try:
             # ptimize makes the encoder do a second pass over the image, if
             # the format supports it.
