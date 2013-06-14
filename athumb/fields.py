@@ -5,7 +5,10 @@ Fields, FieldFiles, and Validators.
 import os
 import cStringIO
 
-from PIL import Image
+try:
+    from PIL import Image
+except ImportError:
+    import Image
 from django.db.models import ImageField
 from django.db.models.fields.files import ImageFieldFile
 from django.conf import settings
