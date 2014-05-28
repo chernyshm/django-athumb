@@ -19,6 +19,8 @@ from athumb.pial.engines.pil_engine import PILEngine
 
 from validators import ImageUploadExtensionValidator
 
+from celery import current_task
+
 try:
     #noinspection PyUnresolvedReferences
     from south.modelsinspector import add_introspection_rules
@@ -135,10 +137,11 @@ class ImageWithThumbsFieldFile(ImageFieldFile):
         if image.mode not in ('L', 'RGB', 'RGBA'):
             image = image.convert('RGBA')
 
-        for thumb in self.field.thumbs:
+        for progress, thumb in enumerate(self.field.thumbs, start=1):
             thumb_name, thumb_options = thumb
             # Pre-create all of the thumbnail sizes.
             self.create_and_store_thumb(image, thumb_name, thumb_options)
+            current_task.update_state(state='PROGRESS', meta={'current': progress, 'total': len(self.field.thumbs)+1})
 
     def _calc_thumb_filename(self, thumb_name):
         """
