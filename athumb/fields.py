@@ -141,7 +141,8 @@ class ImageWithThumbsFieldFile(ImageFieldFile):
             thumb_name, thumb_options = thumb
             # Pre-create all of the thumbnail sizes.
             self.create_and_store_thumb(image, thumb_name, thumb_options)
-            current_task.update_state(state='PROGRESS', meta={'current': progress, 'total': len(self.field.thumbs)+1})
+            if current_task is not None:
+                current_task.update_state(state='PROGRESS', meta={'current': progress, 'total': len(self.field.thumbs)+1})
 
     def _calc_thumb_filename(self, thumb_name):
         """
